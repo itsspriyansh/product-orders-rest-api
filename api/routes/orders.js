@@ -8,17 +8,24 @@ router.get("/", (req, res, next)=>{
 })
 
 router.post("/", (req, res, next)=>{
-    res.status(201).json({
-        message : "orders were sent",
+    const order = {
+        productID : req.body.productID,
+        quantity : req.body.quantity,
+    }
+    res.json({
+        details : {
+            message : "order was created",
+            order : order
+        }
     })
 })
 
 
 router.get("/:orderID", (req, res, next)=>{
     const id = req.params.orderID
-    if (id == "special") {
+    if (id != "special") {
         res.status(200).json({
-            message : "order will be delivered",
+            message : `order will be delivered to ${id}`,
         })
     } else {
         res.status(200).json({

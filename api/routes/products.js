@@ -15,6 +15,16 @@ router.get("/:productID", (req, res, next)=>{
     }
 })
 
+router.post("/", (req, res, next)=>{
+    const product = {
+        name : req.body.productName,
+        price : req.body.productPrice,
+    }
+    res.status(201).json({
+        message : "product successfully created",
+        product : product,
+    })
+})
 
 module.exports = router
 
