@@ -4,39 +4,25 @@ const Product = require("../models/product")
 
 const router = express.Router()
 
-router.get("/:productID", (req, res, next)=>{
+router.get("/:productID", async (req, res, next)=>{
 
-    // const id = req.params.productID
-    // try {
-    //     (async () => {
-    //         const doc = await Product.findById(productID).exec()
-    //         console.log (doc)
-    //         res.status(200).json(doc)
-    //     })()
-    // } catch (error) {
-    //     console.log(error)
-    //     res.status(500).json({
-    //         error : error
-    //     })
-    // }
-
-    const id = req.params.productID
-    Product.findById(productID).exec()
-    .then(doc => {
-        console.log(doc)
-        res.status(200).json(doc)
-    })
-    .catch(error => {
-        console.log(error)
-        res.status(500).json({
-            error : error,
-        })
-    })
+    try {
+        const id = req.params.productID
+        const product = await Product.findById(id)
+        res.status(200).json(product)
+    } catch (error) {
+        res.status(500).json(error)
+    }
 })
 
-router.get("/", (req, res, next) => {
-
-    res.send("products page")
+router.get("/", async (req, res, next) => {
+    
+    try {
+        const products = await Product.find()
+        res.status(200).json(products)
+    } catch (error) {
+        res.status(500).json(error)
+    }
 })
 
 router.post("/", async (req, res, next) => {
