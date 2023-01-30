@@ -4,10 +4,10 @@ const Product = require("../models/product")
 
 const router = express.Router()
 
-router.get("/:productID", async (req, res, next)=>{
+router.get("/:productId", async (req, res, next)=>{
 
     try {
-        const id = req.params.productID
+        const id = req.params.productId
         const product = await Product.findById(id)
         res.status(200).json(product)
     } catch (error) {
@@ -38,6 +38,20 @@ router.post("/", async (req, res, next) => {
         res.status(500).json({error : error})
     }
 });
+
+router.delete("/:productId", async (req, res, next) => {
+
+    try {
+        const id = req.params.productId
+        const product = await Product.deleteMany({_id : id})
+        res.json({
+            message : "successfully deleted",
+            deleted_product : product
+        })
+    } catch (error) {
+        res.json(error)
+    }
+})
 
 module.exports = router
 
