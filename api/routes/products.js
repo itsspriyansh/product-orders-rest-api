@@ -1,5 +1,6 @@
 const express = require("express")
 const mongoose = require("mongoose")
+const { findByIdAndUpdate } = require("../models/product")
 const Product = require("../models/product")
 
 const router = express.Router()
@@ -52,6 +53,26 @@ router.delete("/:productId", async (req, res, next) => {
         res.json(error)
     }
 })
+
+// router.put("/productId", async (req, res, next) => {
+
+//     try {
+//         const id = req.params.productId
+//         const newProduct = {
+//             name : req.body.name,
+//             price : req.body.price,
+//         }
+
+//         const product = await Product.findById(id)
+//         const updatedProduct = await Product.updateOne(newProduct)
+//         res.json({
+//             message : "successfully updated",
+//             updated_product : product,
+//         })
+//     } catch (error) {
+//         res.json(error)
+//     }
+// })
 
 module.exports = router
 
