@@ -8,9 +8,11 @@ const mongoose = require("mongoose")
 
 const app = express()
 
-mongoose.connect("mongodb+srv://itsspiryansh:" + process.env.MONGO_ATLAS_PASSWORD + "@cluster0.mbi5xxx.mongodb.net/test", {
-    useMongoClient : true
-})
+// mongoose.connect(`mongodb+srv://itsspiryansh:${process.env.MONGO_ATLAS_PASSWORD}@cluster0.mbi5xxx.mongodb.net/test`, {useMongoClient : true})
+
+// mongoose.connect("mongodb://localhost/test")
+// mongoose.connect("mongodb+srv://itsspiryansh:" + process.env.MONGO_ATLAS_PASSWORD + "@cluster0.mbi5xxx.mongodb.net/?retryWrites=true&w=majority")
+mongoose.connect("mongodb+srv://itsspiryansh:tic9wdKMAaSVF7r6@cluster0.mbi5xxx.mongodb.net/test")
 
 app.use(bodyParser.urlencoded({extended : false}))
 app.use(bodyParser.json())
@@ -32,15 +34,17 @@ app.use((req, res, next) => {
     next()
 })
 
-app.use("/product", productRouter)
-app.use("/order", orderRouter)
+app.use("/products", productRouter)
+app.use("/orders", orderRouter)
 
+// for incorrect path
 app.use((req, res, next) => {
     const error = new Error("not found")
     error.status = 404
     next(error)
 })
 
+// if any exception is faced during connection
 app.use((error, req, res, next) => {
     res.status(error.status || 500)
     res.json ({
